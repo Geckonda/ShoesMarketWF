@@ -13,11 +13,7 @@ namespace ShoesMarketWF.Entities
         [Key]
         public int Id { get; set; }
 
-
-        [ForeignKey(nameof(RoleEntity))]
-        public int RoleId { get; set; }
-
-        public RoleEntity Role { get; set; }
+        public string Role { get; set; }
 
         [Required]
         [MaxLength(100)]

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ShoesMarketWF.Abstractions;
+using ShoesMarketWF.Entities;
 using ShoesMarketWF.Enums;
 using ShoesMarketWF.Repositories;
 
@@ -8,28 +9,23 @@ namespace ShoesMarketWF
 {
     internal static class Program
     {
-        public static IServiceProvider Services { get; private set; }
+        private static IServiceProvider _services;
 
-        public static Role CurrentRole { get; set; }
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
+        private static Form? _currentMainForm;
+        public static UserEntity? CurrentUser { get; set; }
+
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
-            ApplicationConfiguration.Initialize();
-            Services = ConfigureServices().BuildServiceProvider();
 
-            // Показываем логин как диалог
-            var loginForm = Services.GetRequiredService<AuthForm>();
-            if (loginForm.ShowDialog() == DialogResult.OK)
-            {
-                // Если логин успешен - запускаем главную форму
-                var mainForm = Services.GetRequiredService<MainForm>();
-                Application.Run(mainForm);
-            }
+            ApplicationConfiguration.Initialize();
+            _services = ConfigureServices().BuildServiceProvider();
+
+            // Показываем форму авторизации
+            ShowForm<AuthForm>();
+
+            // Запускаем приложение
+            Application.Run();
         }
 
         private static IServiceCollection ConfigureServices()
@@ -49,6 +45,31 @@ namespace ShoesMarketWF
             services.AddTransient<OrderForm>();
 
             return services; // Возвращаем настроенную коллекцию сервисов
+        }
+
+        public static void ShowForm<T>() where T : Form
+        {
+            // Закрываем текущую форму (если есть)
+            if (_currentMainForm != null)
+            {
+                _currentMainForm.FormClosed -= OnMainFormClosed;
+                _currentMainForm.Close();
+                _currentMainForm = null;
+            }
+
+            // Создаем новую форму
+            var form = _services!.GetRequiredService<T>();
+
+            // Настраиваем ее как главную
+            form.FormClosed += OnMainFormClosed;
+            form.Show();
+
+            _currentMainForm = form;
+        }
+        private static void OnMainFormClosed(object? sender, FormClosedEventArgs e)
+        {
+            // Если форма закрылась - завершаем приложение
+            Application.Exit();
         }
     }
 }

@@ -14,23 +14,20 @@ namespace ShoesMarketWF
         public DbSet<OrderEntity> Orders { get; set; }
         public DbSet<PickupPointEntity> PickupPoints { get; set; }
         public DbSet<ProductEntity> Products { get; set; }
-        public DbSet<RoleEntity> Roles { get; set; }
         public DbSet<OrderDetailsEntity> OrdersDetailes { get; set; }
 
+        public AppDbContext()
+        {
+            
+        }
         public AppDbContext(DbContextOptions options)
             : base(options)
         {
 
         }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<RoleEntity>().HasData(
-                new RoleEntity { Id = 1, Name = "Администратор" },
-                new RoleEntity { Id = 2, Name = "Менеджер" },
-                new RoleEntity { Id = 3, Name = "Авторизированный клиент" }
-            );
+            optionsBuilder.UseNpgsql("User ID = postgres; database = SchoesMarket; HOST = localhost; Port = 5432; Password = 2245;");
         }
     }
 }

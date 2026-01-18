@@ -1,4 +1,5 @@
-﻿using ShoesMarketWF.Abstractions;
+﻿using Microsoft.Extensions.DependencyInjection;
+using ShoesMarketWF.Abstractions;
 using ShoesMarketWF.Controls;
 using ShoesMarketWF.Entities;
 using System;
@@ -17,31 +18,45 @@ namespace ShoesMarketWF
     {
         private readonly IBaseRepository<ProductEntity> _productRepository;
 
+        private FiltersControl _filtersControl;
+
         private List<ProductCard> productCards = new List<ProductCard>();
         public MainForm(IBaseRepository<ProductEntity> productRepository)
         {
             InitializeComponent();
             _productRepository = productRepository;
-            //filterControl1.ApplyRole(Program.CurrentRole);
 
-            //SetupUI();
-            LoadProducts();
+
+            CustomInitForm();
+
+            var products = _productRepository.GetAll() ?? new();
+            LoadProducts(products);
         }
-        //private void SetupUI()
-        //{
-        //    flowPanel = new FlowLayoutPanel
-        //    {
-        //        Dock = DockStyle.Fill,
-        //        AutoScroll = true,
-        //        WrapContents = true,
-        //        Padding = new Padding(10),
-        //        BackColor = Color.White
-        //    };
 
-        //    this.Controls.Add(flowPanel);
-        //}
+        public void CustomInitForm()
+        {
+            // Приветствие
+            var currentUser = Program.CurrentUser;
+            if (currentUser != null)
+            {
+                welcomeLabel.Text = $"Добро пожаловать, {currentUser.Surname} {currentUser.Name}! ({currentUser.Role})";
 
-        private void LoadProducts()
+                if (currentUser.Role == "Администратор")
+                {
+                    _filtersControl = new FiltersControl(_productRepository, LoadProducts);
+                    this.infoFlowPanel.Controls.Add(_filtersControl);
+                }
+                    
+            }
+            else
+            {
+                _filtersControl = null!;
+            }
+
+            
+        }
+
+        private void LoadProducts(List<ProductEntity> products)
         {
             // Очищаем предыдущие карточки
             foreach (var card in productCards)
@@ -52,7 +67,6 @@ namespace ShoesMarketWF
             flowPanel.Controls.Clear();
 
             // Получаем данные о товарах 
-            var products = _productRepository.GetAll() ?? new();
 
             // Создаем карточки для каждого товара
             foreach (var product in products)
@@ -63,6 +77,13 @@ namespace ShoesMarketWF
                 flowPanel.Controls.Add(card);
                 productCards.Add(card);
             }
+        }
+
+        private void backToAuthBtn_Click(object sender, EventArgs e)
+        {
+            Program.ShowForm<AuthForm>();
+            Program.CurrentUser = null;
+            this.Close(); // Закрываем текущую
         }
     }
 }

@@ -26,8 +26,9 @@ namespace ShoesMarketWF
         // Событие навешено на кнопку "Вокйти как гость"
         private void asGuestBtn_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            Program.CurrentUser = null;
+            Program.ShowForm<MainForm>();
+            this.Close(); // Закрываем текущую
         }
 
 
@@ -51,9 +52,9 @@ namespace ShoesMarketWF
                 return;
             }
 
-            Program.CurrentRole = (Role)user.RoleId;
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            Program.CurrentUser = user;
+            Program.ShowForm<MainForm>();
+            this.Close(); // Закрываем текущую
         }
 
         // Устанаваливает сообщение ошибки

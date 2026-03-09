@@ -16,15 +16,18 @@ namespace ShoesMarketWF
         public DbSet<ProductEntity> Products { get; set; }
         public DbSet<OrderDetailsEntity> OrdersDetailes { get; set; }
 
-        public AppDbContext()
-        {
-            
-        }
         public AppDbContext(DbContextOptions options)
             : base(options)
         {
 
         }
+
+        // Конструторк. который нужен для миграций
+        public AppDbContext()
+        {
+
+        }
+        // Метод, при миграциях который подключается к указнной БД
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseNpgsql("User ID = postgres; database = SchoesMarket; HOST = localhost; Port = 5432; Password = 2245;");

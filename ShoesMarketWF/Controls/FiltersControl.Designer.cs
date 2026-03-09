@@ -30,8 +30,9 @@
         {
             label1 = new Label();
             searchTextBox = new TextBox();
-            searchBtn = new Button();
             resetBtn = new Button();
+            sortComboBox = new ComboBox();
+            filterComboBox = new ComboBox();
             SuspendLayout();
             // 
             // label1
@@ -49,23 +50,13 @@
             searchTextBox.Location = new Point(4, 28);
             searchTextBox.Margin = new Padding(4, 5, 4, 5);
             searchTextBox.Name = "searchTextBox";
-            searchTextBox.Size = new Size(350, 29);
+            searchTextBox.Size = new Size(200, 29);
             searchTextBox.TabIndex = 1;
-            // 
-            // searchBtn
-            // 
-            searchBtn.Location = new Point(4, 72);
-            searchBtn.Margin = new Padding(4, 5, 4, 5);
-            searchBtn.Name = "searchBtn";
-            searchBtn.Size = new Size(96, 35);
-            searchBtn.TabIndex = 2;
-            searchBtn.Text = "Поиск";
-            searchBtn.UseVisualStyleBackColor = true;
-            searchBtn.Click += searchBtn_Click;
+            searchTextBox.TextChanged += searchTextBox_TextChanged;
             // 
             // resetBtn
             // 
-            resetBtn.Location = new Point(108, 72);
+            resetBtn.Location = new Point(4, 67);
             resetBtn.Margin = new Padding(4, 5, 4, 5);
             resetBtn.Name = "resetBtn";
             resetBtn.Size = new Size(96, 35);
@@ -74,19 +65,43 @@
             resetBtn.UseVisualStyleBackColor = true;
             resetBtn.Click += resetBtn_Click;
             // 
+            // sortComboBox
+            // 
+            sortComboBox.DisplayMember = "Все";
+            sortComboBox.FormattingEnabled = true;
+            sortComboBox.Items.AddRange(new object[] { "Все", "По убыванию", "По возрастанию" });
+            sortComboBox.Location = new Point(211, 28);
+            sortComboBox.Name = "sortComboBox";
+            sortComboBox.Size = new Size(180, 31);
+            sortComboBox.TabIndex = 4;
+            sortComboBox.ValueMember = "Все";
+            sortComboBox.SelectedIndexChanged += sortComboBox_TextChanged;
+            // 
+            // filterComboBox
+            // 
+            filterComboBox.DisplayMember = "Все";
+            filterComboBox.FormattingEnabled = true;
+            filterComboBox.Location = new Point(397, 28);
+            filterComboBox.Name = "filterComboBox";
+            filterComboBox.Size = new Size(180, 31);
+            filterComboBox.TabIndex = 5;
+            filterComboBox.ValueMember = "Все";
+            filterComboBox.TextChanged += filterComboBox_TextChanged;
+            // 
             // FiltersControl
             // 
             AutoScaleDimensions = new SizeF(9F, 23F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.MenuHighlight;
+            Controls.Add(filterComboBox);
+            Controls.Add(sortComboBox);
             Controls.Add(resetBtn);
-            Controls.Add(searchBtn);
             Controls.Add(searchTextBox);
             Controls.Add(label1);
             Font = new Font("Arial Narrow", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
             Margin = new Padding(4, 5, 4, 5);
             Name = "FiltersControl";
-            Size = new Size(583, 119);
+            Size = new Size(583, 109);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -95,7 +110,8 @@
 
         private Label label1;
         private TextBox searchTextBox;
-        private Button searchBtn;
         private Button resetBtn;
+        private ComboBox sortComboBox;
+        private ComboBox filterComboBox;
     }
 }

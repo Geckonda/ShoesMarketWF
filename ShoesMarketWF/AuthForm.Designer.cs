@@ -134,9 +134,11 @@
             Controls.Add(label1);
             Controls.Add(loginInput);
             Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4);
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "AuthForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Авторизация";

@@ -34,6 +34,8 @@
             backToAuthBtn = new Button();
             infoFlowPanel = new FlowLayoutPanel();
             panel1 = new Panel();
+            orderBtn = new Button();
+            addBtn = new Button();
             infoFlowPanel.SuspendLayout();
             panel1.SuspendLayout();
             SuspendLayout();
@@ -42,16 +44,16 @@
             // 
             flowPanel.AutoScroll = true;
             flowPanel.Dock = DockStyle.Bottom;
-            flowPanel.Location = new Point(0, 261);
+            flowPanel.Location = new Point(0, 192);
             flowPanel.Margin = new Padding(4);
             flowPanel.Name = "flowPanel";
-            flowPanel.Size = new Size(984, 500);
+            flowPanel.Size = new Size(984, 569);
             flowPanel.TabIndex = 0;
             // 
             // welcomeLabel
             // 
             welcomeLabel.AutoSize = true;
-            welcomeLabel.Location = new Point(10, 0);
+            welcomeLabel.Location = new Point(4, 6);
             welcomeLabel.Margin = new Padding(4, 0, 4, 0);
             welcomeLabel.Name = "welcomeLabel";
             welcomeLabel.Size = new Size(197, 23);
@@ -60,7 +62,7 @@
             // 
             // backToAuthBtn
             // 
-            backToAuthBtn.Location = new Point(828, 3);
+            backToAuthBtn.Location = new Point(819, 6);
             backToAuthBtn.Name = "backToAuthBtn";
             backToAuthBtn.Size = new Size(150, 40);
             backToAuthBtn.TabIndex = 2;
@@ -71,20 +73,43 @@
             // infoFlowPanel
             // 
             infoFlowPanel.Controls.Add(panel1);
+            infoFlowPanel.Dock = DockStyle.Top;
             infoFlowPanel.FlowDirection = FlowDirection.TopDown;
-            infoFlowPanel.Location = new Point(0, 12);
+            infoFlowPanel.Location = new Point(0, 0);
             infoFlowPanel.Name = "infoFlowPanel";
-            infoFlowPanel.Size = new Size(984, 242);
+            infoFlowPanel.Size = new Size(984, 191);
             infoFlowPanel.TabIndex = 3;
             // 
             // panel1
             // 
+            panel1.Controls.Add(addBtn);
             panel1.Controls.Add(welcomeLabel);
+            panel1.Controls.Add(orderBtn);
             panel1.Controls.Add(backToAuthBtn);
             panel1.Location = new Point(3, 3);
             panel1.Name = "panel1";
             panel1.Size = new Size(981, 46);
             panel1.TabIndex = 0;
+            // 
+            // orderBtn
+            // 
+            orderBtn.Location = new Point(725, 6);
+            orderBtn.Name = "orderBtn";
+            orderBtn.Size = new Size(88, 40);
+            orderBtn.TabIndex = 3;
+            orderBtn.Text = "Заказы";
+            orderBtn.UseVisualStyleBackColor = true;
+            orderBtn.Visible = false;
+            // 
+            // addBrttn
+            // 
+            addBtn.Location = new Point(563, 6);
+            addBtn.Name = "addBtn";
+            addBtn.Size = new Size(156, 40);
+            addBtn.TabIndex = 4;
+            addBtn.Text = "Добавить товар";
+            addBtn.UseVisualStyleBackColor = true;
+            addBtn.Visible = false;
             // 
             // MainForm
             // 
@@ -95,9 +120,12 @@
             Controls.Add(infoFlowPanel);
             Controls.Add(flowPanel);
             Font = new Font("Arial Narrow", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4);
+            MaximizeBox = false;
             Name = "MainForm";
+            SizeGripStyle = SizeGripStyle.Hide;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Главная";
             infoFlowPanel.ResumeLayout(false);
@@ -113,5 +141,7 @@
         private Button backToAuthBtn;
         private FlowLayoutPanel infoFlowPanel;
         private Panel panel1;
+        private Button orderBtn;
+        private Button addBtn;
     }
 }

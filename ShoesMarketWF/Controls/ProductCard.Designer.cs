@@ -42,6 +42,9 @@
             productAmount = new Label();
             productDiscount = new Label();
             productSupplier = new Label();
+            productPriceWithDiscount = new Label();
+            editBtn = new Button();
+            deleteBtn = new Button();
             ((System.ComponentModel.ISupportInitialize)productImg).BeginInit();
             SuspendLayout();
             // 
@@ -173,12 +176,48 @@
             productSupplier.TabIndex = 13;
             productSupplier.Text = "+";
             // 
+            // productPriceWithDiscount
+            // 
+            productPriceWithDiscount.AutoSize = true;
+            productPriceWithDiscount.Font = new Font("Arial Black", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            productPriceWithDiscount.Location = new Point(277, 66);
+            productPriceWithDiscount.Name = "productPriceWithDiscount";
+            productPriceWithDiscount.Size = new Size(0, 17);
+            productPriceWithDiscount.TabIndex = 14;
+            // 
+            // editBtn
+            // 
+            editBtn.Font = new Font("Arial Narrow", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            editBtn.Location = new Point(604, 118);
+            editBtn.Name = "editBtn";
+            editBtn.Size = new Size(134, 35);
+            editBtn.TabIndex = 15;
+            editBtn.Text = "Редактировать";
+            editBtn.UseVisualStyleBackColor = true;
+            editBtn.Visible = false;
+            editBtn.Click += editBtn_Click;
+            // 
+            // deleteBtn
+            // 
+            deleteBtn.Font = new Font("Arial Narrow", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            deleteBtn.Location = new Point(744, 118);
+            deleteBtn.Name = "deleteBtn";
+            deleteBtn.Size = new Size(120, 35);
+            deleteBtn.TabIndex = 16;
+            deleteBtn.Text = "Удалить";
+            deleteBtn.UseVisualStyleBackColor = true;
+            deleteBtn.Visible = false;
+            deleteBtn.Click += deleteBtn_Click;
+            // 
             // ProductCard
             // 
             AutoScaleDimensions = new SizeF(6F, 16F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
             BorderStyle = BorderStyle.Fixed3D;
+            Controls.Add(deleteBtn);
+            Controls.Add(editBtn);
+            Controls.Add(productPriceWithDiscount);
             Controls.Add(productSupplier);
             Controls.Add(productDiscount);
             Controls.Add(productAmount);
@@ -216,5 +255,8 @@
         private Label productAmount;
         private Label productDiscount;
         private Label productSupplier;
+        private Label productPriceWithDiscount;
+        private Button editBtn;
+        private Button deleteBtn;
     }
 }

@@ -41,10 +41,15 @@ namespace ShoesMarketWF
             {
                 welcomeLabel.Text = $"Добро пожаловать, {currentUser.Surname} {currentUser.Name}! ({currentUser.Role})";
 
+                if(currentUser.Role == "Администратор" || currentUser.Role == "Модератор")
+                {
+                    orderBtn.Visible = true;
+                }
                 if (currentUser.Role == "Администратор")
                 {
                     _filtersControl = new FiltersControl(_productRepository, LoadProducts);
                     this.infoFlowPanel.Controls.Add(_filtersControl);
+                    addBtn.Visible = true;
                 }
                     
             }
@@ -56,34 +61,56 @@ namespace ShoesMarketWF
             
         }
 
+
         private void LoadProducts(List<ProductEntity> products)
         {
-            // Очищаем предыдущие карточки
-            foreach (var card in productCards)
+            // Замораживаем отрисовку панели
+            flowPanel.SuspendLayout();
+
+            try
             {
-                card.Dispose();
+                // Очищаем предыдущие карточки
+                foreach (var card in productCards)
+                {
+                    card.Dispose();
+                }
+                productCards.Clear();
+                flowPanel.Controls.Clear();
+
+                // Создаем новые карточки
+                foreach (var product in products)
+                {
+                    var card = new ProductCard(product, DeleteProduct);
+                    flowPanel.Controls.Add(card);
+                    productCards.Add(card);
+                }
             }
-            productCards.Clear();
-            flowPanel.Controls.Clear();
-
-            // Получаем данные о товарах 
-
-            // Создаем карточки для каждого товара
-            foreach (var product in products)
+            finally
             {
-                var card = new ProductCard(product);
-
-                // Добавляем на панель
-                flowPanel.Controls.Add(card);
-                productCards.Add(card);
+                // Возобновляем отрисовку и перерисовываем всё сразу
+                flowPanel.ResumeLayout();
+                flowPanel.PerformLayout(); // Принудительная перерисовка
             }
         }
 
+        private void DeleteProduct(int id)
+        {
+            try
+            {
+                //_productRepository.Delete(id);
+                MessageBox.Show("Удалил");
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("при удалении что-то пошло не так", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         private void backToAuthBtn_Click(object sender, EventArgs e)
         {
             Program.ShowForm<AuthForm>();
             Program.CurrentUser = null;
-            this.Close(); // Закрываем текущую
         }
     }
 }
